@@ -13,6 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -56,6 +57,7 @@ public class Drivetrain extends SubsystemBase{
 
   public Drivetrain() {
     ahrs.reset();
+   // SmartDashboard.putNumber("Velocity Error", m_frontLeft.getVelocityError());
   }
 
   /**
@@ -78,7 +80,9 @@ public class Drivetrain extends SubsystemBase{
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_backLeft.setDesiredState(swerveModuleStates[2]);
     m_backRight.setDesiredState(swerveModuleStates[3]);
-
+    
+    System.out.println(swerveModuleStates[3]);
+ // System.out.println("frontleft current Rotation: " + m_frontLeft.getStateRotation(swerveModuleStates[0]));
    // System.out.println("frontleft current state: " + m_frontLeft.getState().toString() );
   }
 
@@ -97,6 +101,15 @@ public class Drivetrain extends SubsystemBase{
   public Pose2d getPose(){
     return m_odometry.getPoseMeters();
   }
-}
 
+  public void printEncoder() {
+    //System.out.println(m_frontLeft.getVelocityError());
+  }
+
+  @Override
+  public void periodic(){
+    //System.out.println(m_frontLeft.getModuleVelocity());
+  }
+
+}
 

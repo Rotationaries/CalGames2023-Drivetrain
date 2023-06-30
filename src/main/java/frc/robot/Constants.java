@@ -10,8 +10,8 @@ public final class Constants {
   }
 
   public static class DriveConstants {
-    public static final double kMaxSpeed = 3.0; // 3 meters per second
-    public static final double kMaxAngularSpeed = Math.PI; // 1/2 rotation per second
+    public static final double kMaxSpeed = 10.0; // 3 meters per second
+    public static final double kMaxAngularSpeed = 6; // 1/2 rotation per second
 
     //FL-Front Left, DM-Driving Motor, TM-Turning Motor, DE-Driving Encoder, TE-Turning Encoder
     public static final int FLDMChannel = 12;
@@ -35,17 +35,17 @@ public final class Constants {
     public static final int kEncoderResolution = 4096;
 
     public static final double kModuleMaxAngularVelocity = DriveConstants.kMaxAngularSpeed;
-    public static final double kModuleMaxAngularAcceleration = 2 * Math.PI; // radians per second squared
+    public static final double kModuleMaxAngularAcceleration = 10; // radians per second squared
 
     // drive PID constants
-    public static final double PIDp = 0.6;
+    public static final double PIDp = 0.1;
 
     public static final double PIDi = 0;
     public static final double PIDd = 0;
 
     // turning PID constants 
-    public static final double ProfiledPIDp = 0.05;
-    public static final double ProfiledPIDi = 0;
+    public static final double ProfiledPIDp = 0.2;
+    public static final double ProfiledPIDi = 0.;
     public static final double ProfiledPIDd = 0;
 
     public static final double DriveKs = 0;
