@@ -13,7 +13,7 @@ public final class Constants {
     public static final double kMaxSpeed = 10.0; // 3 meters per second
     public static final double kMaxAngularSpeed = 6; // 1/2 rotation per second
 
-    //FL-Front Left, DM-Driving Motor, TM-Turning Motor, DE-Driving Encoder, TE-Turning Encoder
+    //FL-Front Left, DM-Driving Motor, TM-Turning Motor, TE-Turning Encoder
     public static final int FLDMChannel = 12;
     public static final int FLTMChannel = 11;
     public static final int FLTEChannel = 13;
