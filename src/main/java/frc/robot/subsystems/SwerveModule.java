@@ -34,13 +34,12 @@ public class SwerveModule extends SubsystemBase{
 
   
   // Gains are for example purposes only - must be determined for your own robot!
-  private final ProfiledPIDController m_turningPIDController =
-      new ProfiledPIDController(
+  private final PIDController m_turningPIDController =
+      new PIDController(
           SwerveConstants.ProfiledPIDp,
           SwerveConstants.ProfiledPIDi,
-          SwerveConstants.ProfiledPIDd,
-          new TrapezoidProfile.Constraints(
-              SwerveConstants.kModuleMaxAngularVelocity, SwerveConstants.kModuleMaxAngularAcceleration));
+          SwerveConstants.ProfiledPIDd
+          );
 
   // Gains are for example purposes only - must be determined for your own robot!
   private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(SwerveConstants.DriveKs, SwerveConstants.DriveKv);
@@ -76,7 +75,9 @@ public class SwerveModule extends SubsystemBase{
 
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous.
-    m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
+    m_turningPIDController.enableContinuousInput(-Math.PI/2, Math.PI/2);
+
+    m_turningEncoder.configMagnetOffset(0);
   }
 
   public double getVelocityError(){
@@ -86,6 +87,10 @@ public class SwerveModule extends SubsystemBase{
   public double getModuleVelocity(){
     return m_driveEncoder.getVelocity();
     //m_drivePIDController.measurement;
+  }
+
+  public double getDesiredAngle() {
+    return m_turningPIDController.getSetpoint();
   }
 
 
@@ -154,8 +159,8 @@ public class SwerveModule extends SubsystemBase{
     final double turnOutput =
         m_turningPIDController.calculate(m_moduleAngleRadians, state.angle.getRadians());
 
-    final double turnFeedforward =
-        m_turnFeedforward.calculate(m_turningPIDController.getSetpoint().velocity);
+    // final double turnFeedforward =
+    //     m_turnFeedforward.calculate(m_turningPIDController.getSetpoint().velocity);
 
    // m_driveMotor.setVoltage(driveOutput + driveFeedforward);
    // m_turningMotor.setVoltage(controller.getRightX());

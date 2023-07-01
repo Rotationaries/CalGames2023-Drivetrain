@@ -83,19 +83,19 @@ public class Drivetrain extends SubsystemBase{
     
     SmartDashboard.putNumber("FL SpeedError", m_frontLeft.getVelocityError());
     SmartDashboard.putNumber("FL Rotation", m_frontLeft.getModuleAngle());
-    SmartDashboard.putNumber("FL D R", swerveModuleStates[0].angle.getRadians());
+    SmartDashboard.putNumber("FL D R", m_frontLeft.getDesiredAngle());
 
     SmartDashboard.putNumber("FR SpeedError", m_frontRight.getVelocityError());
     SmartDashboard.putNumber("FR Rotation", m_frontRight.getModuleAngle());
-    SmartDashboard.putNumber("FR D R", swerveModuleStates[1].angle.getRadians());
+    SmartDashboard.putNumber("FR D R", m_frontRight.getDesiredAngle());
 
     SmartDashboard.putNumber("BL SpeedError", m_backLeft.getVelocityError());
     SmartDashboard.putNumber("BL Rotation", m_backLeft.getModuleAngle());
-    SmartDashboard.putNumber("BL D R", swerveModuleStates[2].angle.getRadians());
+    SmartDashboard.putNumber("BL D R", m_backLeft.getDesiredAngle());
 
     SmartDashboard.putNumber("BR SpeedError", m_backRight.getVelocityError());
     SmartDashboard.putNumber("BR Rotation", m_backRight.getModuleAngle());
-    SmartDashboard.putNumber("BR D R", swerveModuleStates[3].angle.getRadians());
+    SmartDashboard.putNumber("BR D R", m_backRight.getDesiredAngle());
 
     // System.out.println(swerveModuleStates[3]);
  // System.out.println("frontleft current Rotation: " + m_frontLeft.getStateRotation(swerveModuleStates[0]));
