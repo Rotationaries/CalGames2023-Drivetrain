@@ -60,7 +60,8 @@ public class SwerveModule extends SubsystemBase{
   public SwerveModule(
       int driveMotorChannel,
       int turningMotorChannel,
-      int turningEncoderChannel) {
+      int turningEncoderChannel,
+      double turnEncoderOffsetDegrees) {
     m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
 
@@ -77,7 +78,7 @@ public class SwerveModule extends SubsystemBase{
     // to be continuous.
     m_turningPIDController.enableContinuousInput(-Math.PI/2, Math.PI/2);
 
-    m_turningEncoder.configMagnetOffset(0);
+    m_turningEncoder.configMagnetOffset(turnEncoderOffsetDegrees);
   }
 
   public double getVelocityError(){

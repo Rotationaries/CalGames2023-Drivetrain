@@ -26,16 +26,16 @@ public class Drivetrain extends SubsystemBase{
   
   private final SwerveModule m_frontLeft = new SwerveModule(
     DriveConstants.FLDMChannel, DriveConstants.FLTMChannel, 
-    DriveConstants.FLTEChannel);
+    DriveConstants.FLTEChannel, DriveConstants.FLTEOffsetDegrees);
   private final SwerveModule m_frontRight = new SwerveModule(
     DriveConstants.FRDMChannel, DriveConstants.FRTMChannel, 
-    DriveConstants.FRTEChannel);
+    DriveConstants.FRTEChannel, DriveConstants.FRTEOffsetDegrees);
   private final SwerveModule m_backLeft = new SwerveModule(
     DriveConstants.BLDMChannel, DriveConstants.BLTMChannel, 
-    DriveConstants.BLTEChannel);
+    DriveConstants.BLTEChannel, DriveConstants.BLTEOffsetDegrees);
   private final SwerveModule m_backRight = new SwerveModule(
     DriveConstants.BRDMChannel, DriveConstants.BRTMChannel, 
-    DriveConstants.BRTEChannel);
+    DriveConstants.BRTEChannel, DriveConstants.BRTEOffsetDegrees);
   
 
   private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
