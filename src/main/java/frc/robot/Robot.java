@@ -6,12 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Drivetrain.JoystickDrive;
-import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.Drivetrain;
 
 
@@ -69,7 +66,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    joystickDrive = new JoystickDrive(m_controller, m_swerve, true);
+    joystickDrive = new JoystickDrive(m_controller, m_swerve, false);
   }
 
   @Override

@@ -25,6 +25,7 @@ public final class Constants {
     public static final int BLDMChannel = 9;
     public static final int BLTMChannel = 8;
     public static final int BLTEChannel = 10;
+
     public static final int BRDMChannel = 6;
     public static final int BRTMChannel = 5;
     public static final int BRTEChannel = 7;
@@ -39,14 +40,13 @@ public final class Constants {
 
     // drive PID constants
     public static final double PIDp = 0.1;
-
     public static final double PIDi = 0;
     public static final double PIDd = 0;
 
     // turning PID constants 
-    public static final double ProfiledPIDp = 0.2;
-    public static final double ProfiledPIDi = 0.;
-    public static final double ProfiledPIDd = 0;
+    public static final double ProfiledPIDp = 0.02;
+    public static final double ProfiledPIDi = 0;
+    public static final double ProfiledPIDd = 0.01;
 
     public static final double DriveKs = 0;
     public static final double DriveKv = 0;

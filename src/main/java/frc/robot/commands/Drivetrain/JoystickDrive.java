@@ -55,8 +55,8 @@ public class JoystickDrive extends CommandBase {
         -m_rotLimiter.calculate(MathUtil.applyDeadband(controller.getRightX(), 0.02))
             * DriveConstants.kMaxAngularSpeed;
 
-    SmartDashboard.putNumber("Rottation", rot);
-   // System.out.println(rot);
+      SmartDashboard.putNumber("Rottation", rot);
+    //System.out.println("current rotation: " + rot);
     //System.out.println("Drive Speed (x): " + xSpeed + "Drive Speed (y): " + ySpeed + "Rotation Speed: " + rot );
 
     drive.drive(xSpeed, ySpeed, rot, fieldRelative);

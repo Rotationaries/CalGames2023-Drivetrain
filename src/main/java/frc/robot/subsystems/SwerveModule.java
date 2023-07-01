@@ -16,10 +16,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveModule extends SubsystemBase{
   private final CANSparkMax m_driveMotor;
@@ -84,6 +85,7 @@ public class SwerveModule extends SubsystemBase{
 
   public double getModuleVelocity(){
     return m_driveEncoder.getVelocity();
+    //m_drivePIDController.measurement;
   }
 
 
@@ -100,6 +102,11 @@ public class SwerveModule extends SubsystemBase{
     return new SwerveModuleState(
         m_driveEncoder.getVelocity(), new Rotation2d(m_moduleAngleRadians));
   }
+
+  public double getModuleAngle() {
+    return m_turningEncoder.getAbsolutePosition() * 2 * Math.PI / 360;
+  }
+  
 
   /**
    * Returns the current position of the module.
@@ -152,14 +159,16 @@ public class SwerveModule extends SubsystemBase{
 
    // m_driveMotor.setVoltage(driveOutput + driveFeedforward);
    // m_turningMotor.setVoltage(controller.getRightX());
-    m_turningMotor.setVoltage(turnOutput);
-    //System.out.println(turnOutput);
-
-    m_driveMotor.setVoltage(0);
-
+    //SmartDashboard.putNumber("turning current radians" + this.toString(), m_moduleAngleRadians);
+    m_turningMotor.set(turnOutput);
+    // System.out.println("Turn Motor Speed: " + turnOutput);
+    m_driveMotor.set(0);
+    // System.out.println("Drive Velocity: " + driveOutput);
+    // System.out.println("Wheel Rotation: " + getTurnEncoderValues());
+    // System.out.println("Module Velocity: " + getModuleVelocity());
    // System.out.println(turnOutput + turnFeedforward);
+    //System.out.println(state);
    // m_turningMotor.setVoltage(1);
-   // System.out.println("Drive Velocity: " + driveOutput + "Turn Velocity: " + turnOutput);
   }
 
   public double getDriveEncoderValues() {
