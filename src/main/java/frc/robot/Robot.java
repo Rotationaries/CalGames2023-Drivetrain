@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    joystickDrive = new JoystickDrive(m_controller, m_swerve, false);
+    joystickDrive = new JoystickDrive(m_controller, m_swerve, true);
   }
 
   @Override

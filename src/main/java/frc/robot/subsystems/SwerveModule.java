@@ -6,8 +6,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxRelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -34,12 +36,14 @@ public class SwerveModule extends SubsystemBase{
 
   
   // Gains are for example purposes only - must be determined for your own robot!
-  private final PIDController m_turningPIDController =
-      new PIDController(
+  private final ProfiledPIDController m_turningPIDController =
+      new ProfiledPIDController(
           SwerveConstants.ProfiledPIDp,
           SwerveConstants.ProfiledPIDi,
-          SwerveConstants.ProfiledPIDd
-          );
+          SwerveConstants.ProfiledPIDd,
+          new TrapezoidProfile.Constraints(
+              SwerveConstants.kModuleMaxAngularVelocity, SwerveConstants.kModuleMaxAngularAcceleration));
+
 
   // Gains are for example purposes only - must be determined for your own robot!
   private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(SwerveConstants.DriveKs, SwerveConstants.DriveKv);
@@ -60,15 +64,19 @@ public class SwerveModule extends SubsystemBase{
   public SwerveModule(
       int driveMotorChannel,
       int turningMotorChannel,
-      int turningEncoderChannel) {
+      int turningEncoderChannel,
+      double offset) {
     m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
+    //m_driveMotor.setInverted(true);
+    m_turningMotor.setInverted(true);
 
-    m_driveEncoder = m_driveMotor.getEncoder();
+    m_driveEncoder = m_driveMotor.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
     m_turningEncoder = new CANCoder(turningEncoderChannel);
 
     // Distance per pulse
-    m_driveEncoder.setPositionConversionFactor(2 * Math.PI * SwerveConstants.kWheelRadius / SwerveConstants.kEncoderResolution);
+    m_driveEncoder.setPositionConversionFactor(2 * Math.PI * SwerveConstants.kWheelRadius / 6.75);
+    m_driveEncoder.setVelocityConversionFactor(2 * Math.PI * SwerveConstants.kWheelRadius / 6.75 / 60); // 60 seconds per minute
 
     // Radians per pulse
      //m_turningEncoder.setDistancePerPulse(2 * Math.PI / SwerveConstants.kEncoderResolution);
@@ -77,11 +85,11 @@ public class SwerveModule extends SubsystemBase{
     // to be continuous.
     m_turningPIDController.enableContinuousInput(-Math.PI/2, Math.PI/2);
 
-    m_turningEncoder.configMagnetOffset(0);
+    m_turningEncoder.configMagnetOffset(-offset);
   }
 
-  public double getVelocityError(){
-    return m_drivePIDController.getVelocityError();
+  public double getDesiredVelocity(){
+    return m_drivePIDController.getSetpoint();
   }
 
   public double getModuleVelocity(){
@@ -90,7 +98,8 @@ public class SwerveModule extends SubsystemBase{
   }
 
   public double getDesiredAngle() {
-    return m_turningPIDController.getSetpoint();
+    //return m_turningPIDController.getSetpoint();
+    return 0;
   }
 
 
@@ -150,7 +159,7 @@ public class SwerveModule extends SubsystemBase{
 
     // Calculate the drive output from the drive PID controller.
     final double driveOutput =
-        m_drivePIDController.calculate(m_driveEncoder.getVelocityConversionFactor(), state.speedMetersPerSecond);
+        m_drivePIDController.calculate(m_driveEncoder.getVelocity(), state.speedMetersPerSecond);
     
     
     final double driveFeedforward = m_driveFeedforward.calculate(state.speedMetersPerSecond);
@@ -167,7 +176,7 @@ public class SwerveModule extends SubsystemBase{
     //SmartDashboard.putNumber("turning current radians" + this.toString(), m_moduleAngleRadians);
     m_turningMotor.set(turnOutput);
     // System.out.println("Turn Motor Speed: " + turnOutput);
-    m_driveMotor.set(0);
+    m_driveMotor.set(driveOutput);
     // System.out.println("Drive Velocity: " + driveOutput);
     // System.out.println("Wheel Rotation: " + getTurnEncoderValues());
     // System.out.println("Module Velocity: " + getModuleVelocity());

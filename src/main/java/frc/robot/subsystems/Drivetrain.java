@@ -26,16 +26,16 @@ public class Drivetrain extends SubsystemBase{
   
   private final SwerveModule m_frontLeft = new SwerveModule(
     DriveConstants.FLDMChannel, DriveConstants.FLTMChannel, 
-    DriveConstants.FLTEChannel);
+    DriveConstants.FLTEChannel, 278.174);
   private final SwerveModule m_frontRight = new SwerveModule(
     DriveConstants.FRDMChannel, DriveConstants.FRTMChannel, 
-    DriveConstants.FRTEChannel);
+    DriveConstants.FRTEChannel, 343.916);
   private final SwerveModule m_backLeft = new SwerveModule(
     DriveConstants.BLDMChannel, DriveConstants.BLTMChannel, 
-    DriveConstants.BLTEChannel);
+    DriveConstants.BLTEChannel, 119.707);
   private final SwerveModule m_backRight = new SwerveModule(
     DriveConstants.BRDMChannel, DriveConstants.BRTMChannel, 
-    DriveConstants.BRTEChannel);
+    DriveConstants.BRTEChannel, 181.494);
   
 
   private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
@@ -81,20 +81,28 @@ public class Drivetrain extends SubsystemBase{
     m_backLeft.setDesiredState(swerveModuleStates[2]);
     m_backRight.setDesiredState(swerveModuleStates[3]);
     
-    SmartDashboard.putNumber("FL SpeedError", m_frontLeft.getVelocityError());
+    SmartDashboard.putNumber("FL Speed", m_frontLeft.getModuleVelocity());
+    SmartDashboard.putNumber("FL D S", m_frontLeft.getDesiredVelocity());
     SmartDashboard.putNumber("FL Rotation", m_frontLeft.getModuleAngle());
+    SmartDashboard.putNumber("FL D R U", swerveModuleStates[0].angle.getRadians());
     SmartDashboard.putNumber("FL D R", m_frontLeft.getDesiredAngle());
 
-    SmartDashboard.putNumber("FR SpeedError", m_frontRight.getVelocityError());
+    SmartDashboard.putNumber("FR Speed", m_frontRight.getModuleVelocity());
+    SmartDashboard.putNumber("FR D S", m_frontRight.getDesiredVelocity());
     SmartDashboard.putNumber("FR Rotation", m_frontRight.getModuleAngle());
+    SmartDashboard.putNumber("FR D R U", swerveModuleStates[1].angle.getRadians());
     SmartDashboard.putNumber("FR D R", m_frontRight.getDesiredAngle());
 
-    SmartDashboard.putNumber("BL SpeedError", m_backLeft.getVelocityError());
+    SmartDashboard.putNumber("BL Speed", m_backLeft.getModuleVelocity());
+    SmartDashboard.putNumber("BL D S", m_backLeft.getDesiredVelocity());
     SmartDashboard.putNumber("BL Rotation", m_backLeft.getModuleAngle());
+    SmartDashboard.putNumber("BL D R U", swerveModuleStates[2].angle.getRadians());
     SmartDashboard.putNumber("BL D R", m_backLeft.getDesiredAngle());
 
-    SmartDashboard.putNumber("BR SpeedError", m_backRight.getVelocityError());
+    SmartDashboard.putNumber("BR Speed", m_backRight.getModuleVelocity());
+    SmartDashboard.putNumber("BR D S", m_backRight.getDesiredVelocity());
     SmartDashboard.putNumber("BR Rotation", m_backRight.getModuleAngle());
+    SmartDashboard.putNumber("BR D R U", swerveModuleStates[3].angle.getRadians());
     SmartDashboard.putNumber("BR D R", m_backRight.getDesiredAngle());
 
     // System.out.println(swerveModuleStates[3]);
