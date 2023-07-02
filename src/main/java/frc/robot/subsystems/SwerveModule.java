@@ -6,14 +6,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxRelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -21,8 +19,6 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveConstants;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveModule extends SubsystemBase{
   private final CANSparkMax m_driveMotor;
@@ -46,8 +42,8 @@ public class SwerveModule extends SubsystemBase{
 
 
   // Gains are for example purposes only - must be determined for your own robot!
-  private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(SwerveConstants.DriveKs, SwerveConstants.DriveKv);
-  private final SimpleMotorFeedforward m_turnFeedforward = new SimpleMotorFeedforward(SwerveConstants.TurnKs, SwerveConstants.TurnKv);
+  // private final SimpleMotorFeedforward m_driveFeedforward = new SimpleMotorFeedforward(SwerveConstants.DriveKs, SwerveConstants.DriveKv);
+  // private final SimpleMotorFeedforward m_turnFeedforward = new SimpleMotorFeedforward(SwerveConstants.TurnKs, SwerveConstants.TurnKv);
 
   public final XboxController controller = new  XboxController(0);;
   /**
@@ -65,7 +61,7 @@ public class SwerveModule extends SubsystemBase{
       int driveMotorChannel,
       int turningMotorChannel,
       int turningEncoderChannel,
-      double offset) {
+      double turningEncoderOffsetDegrees) {
     m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
     //m_driveMotor.setInverted(true);
@@ -85,7 +81,7 @@ public class SwerveModule extends SubsystemBase{
     // to be continuous.
     m_turningPIDController.enableContinuousInput(-Math.PI/2, Math.PI/2);
 
-    m_turningEncoder.configMagnetOffset(-offset);
+    m_turningEncoder.configMagnetOffset(-turningEncoderOffsetDegrees);
   }
 
   public double getDesiredVelocity(){
@@ -162,7 +158,7 @@ public class SwerveModule extends SubsystemBase{
         m_drivePIDController.calculate(m_driveEncoder.getVelocity(), state.speedMetersPerSecond);
     
     
-    final double driveFeedforward = m_driveFeedforward.calculate(state.speedMetersPerSecond);
+    // final double driveFeedforward = m_driveFeedforward.calculate(state.speedMetersPerSecond);
 
     // Calculate the turning motor output from the turning PID controller.
     final double turnOutput =

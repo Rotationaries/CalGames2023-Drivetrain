@@ -17,22 +17,22 @@ public final class Constants {
     public static final int FLDMChannel = 12;
     public static final int FLTMChannel = 11;
     public static final int FLTEChannel = 13;
-    public static final double FLTEOffsetDegrees = 0;
+    public static final double FLTEOffsetDegrees = 278.174;
 
     public static final int FRDMChannel = 3;
     public static final int FRTMChannel = 2;
     public static final int FRTEChannel = 4;
-    public static final double FRTEOffsetDegrees = 0;
+    public static final double FRTEOffsetDegrees = 343.916;
 
     public static final int BLDMChannel = 9;
     public static final int BLTMChannel = 8;
     public static final int BLTEChannel = 10;
-    public static final double BLTEOffsetDegrees = 0;
+    public static final double BLTEOffsetDegrees = 119.707;
 
     public static final int BRDMChannel = 6;
     public static final int BRTMChannel = 5;
     public static final int BRTEChannel = 7;
-    public static final double BRTEOffsetDegrees = 0;
+    public static final double BRTEOffsetDegrees = 181.494;
   }
   
   public static class SwerveConstants {
